@@ -34,7 +34,7 @@ pipeline {
                     echo "Using ADC:"
                     gcloud auth application-default print-access-token > /dev/null
 
-                    terraform init \
+                    cd src && terraform init \
                       -backend-config="bucket=$GOOGLE_PROJECT-tfstate" \
                       -backend-config="prefix=jenkins"
                 '''
