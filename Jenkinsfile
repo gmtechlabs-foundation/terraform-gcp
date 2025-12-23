@@ -57,7 +57,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    terraform apply \
+                    cd src && terraform apply \
                     -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT" \
                     -auto-approve tfplan
                 '''
