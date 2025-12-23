@@ -42,9 +42,10 @@ pipeline {
         }
 
       stage('Terraform Plan') { 
-        steps { 
-               sh ''' cd src && terraform plan \ 
-                      -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT" \ 
+        steps
+            { 
+                sh ''' cd src && terraform plan \
+                      -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT" \
                       -out=tfplan 
                   ''' 
               } 
