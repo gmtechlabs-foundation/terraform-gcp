@@ -19,6 +19,15 @@ pipeline {
             }
         }
 
+        stage('TESTING...') {
+            steps {
+                sh ''' echo "Testing DNS:" nslookup registry.terraform.io || true 
+                       echo "Testing HTTPS:" curl -v https://registry.terraform.io/.well-known/terraform.json || true 
+                       echo "Testing CA certificates:" ls -l /etc/ssl/certs || true 
+                    '''
+            }
+        }
+
         stage('Terraform Format & Validate') {
             steps {
                 sh '''
