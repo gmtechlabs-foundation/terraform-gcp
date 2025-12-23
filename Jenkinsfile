@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    options {
-        timestamps()
-        ansiColor('xterm')
-    }
-
     environment {
         GOOGLE_IMPERSONATE_SERVICE_ACCOUNT = "terraform-ci@gmtech-bld-001.iam.gserviceaccount.com"
         GOOGLE_PROJECT = "gmtech-bld-001"
