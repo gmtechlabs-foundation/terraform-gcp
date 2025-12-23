@@ -2,7 +2,8 @@ pipeline {
     agent {
         docker { 
         image 'jenkins-terraform-agent' 
-        args '-v /var/jenkins_home/.config/gcloud:/root/.config/gcloud:ro' 
+        args '-v /c/Users/vinod/AppData/Roaming/gcloud/application_default_credentials.json:/root/.config/gcloud/application_default_credentials.json'
+ 
         }
     }
     environment {
