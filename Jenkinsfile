@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker { 
-        image 'hashicorp/terraform:1.5.7' 
+        image 'jenkins-terraform-agent' 
         args '-v /var/jenkins_home/.config/gcloud:/root/.config/gcloud:ro' 
         }
     }
