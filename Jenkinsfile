@@ -19,15 +19,6 @@ pipeline {
             }
         }
 
-        stage('TESTING...') {
-            steps {
-                sh ''' echo "Testing DNS:" nslookup registry.terraform.io || true 
-                       echo "Testing HTTPS:" curl -v https://registry.terraform.io/.well-known/terraform.json || true 
-                       echo "Testing CA certificates:" ls -l /etc/ssl/certs || true 
-                    '''
-            }
-        }
-
         stage('Terraform Format & Validate') {
             steps {
                 sh '''
@@ -50,15 +41,14 @@ pipeline {
             }
         }
 
-        stage('Terraform Plan') {
-            steps {
-                sh '''
-                    cd src && terraform plan \
-                    -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT"
-                      -out=tfplan
-                '''
+      stage('Terraform Plan') { 
+        steps { 
+               sh ''' cd src && terraform plan \ 
+                      -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT" \ 
+                      -out=tfplan 
+                  ''' 
+              } 
             }
-        }
 
         stage('Terraform Apply') {
             when {
