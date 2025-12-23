@@ -1,8 +1,10 @@
 pipeline {
-    docker { 
+    agent {
+        docker { 
         image 'terraform:1.14' 
         args '-v /var/jenkins_home/.config/gcloud:/root/.config/gcloud:ro' 
         }
+    }
     environment {
         GOOGLE_IMPERSONATE_SERVICE_ACCOUNT = "terraform-ci@gmtech-bld-001.iam.gserviceaccount.com"
         GOOGLE_PROJECT = "gmtech-bld-001"
