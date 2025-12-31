@@ -16,7 +16,7 @@ pipeline {
     environment {
         GOOGLE_IMPERSONATE_SERVICE_ACCOUNT = "terraform-ci@gmtech-bld-001.iam.gserviceaccount.com"
         GOOGLE_PROJECT = "gmtech-bld-001"
-        GITHUB_TOKEN = credentials('github-token')
+        GITHUB_TOKEN = credentials('classic-git-pat')
         REPO = "your-org/your-repo"
     }
 
