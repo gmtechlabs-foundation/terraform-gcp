@@ -73,8 +73,7 @@ pipeline {
             def pr = env.CHANGE_ID 
             def repo = "vinoddevlab/terraform-gcp" 
             def token = credentials('classic-git-pat') 
-            def response = sh( script: """ curl -s -H "Authorization: token ${token}" \ 
-                                           https://api.github.com/repos/${repo}/pulls/${pr} """, returnStdout: true ).trim() 
+            def response = sh( script: """ curl -s -H "Authorization: token ${token}" https://api.github.com/repos/${repo}/pulls/${pr} """, returnStdout: true ).trim() 
             def prInfo = readJSON text: response 
             echo "mergeable_state = ${prInfo.mergeable_state}" 
             if (prInfo.mergeable_state != "clean") { 
