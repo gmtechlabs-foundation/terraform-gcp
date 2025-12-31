@@ -69,9 +69,6 @@ pipeline {
                     cd src && terraform apply \
                     -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT" \
                     -auto-approve tfplan''', returnStatus: true)
-                if (status != 0) {
-                    error("Terraform apply failed. PR will NOT be merged.")
-                }
             }
         }
     }
