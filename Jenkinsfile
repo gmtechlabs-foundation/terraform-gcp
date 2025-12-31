@@ -65,11 +65,17 @@ pipeline {
                 branch 'main'
             }
             steps {
+            script {
                 def status = sh(script: '''
                     cd src && terraform apply \
                     -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT" \
-                    -auto-approve tfplan''', returnStatus: true)
+                    -auto-approve tfplan
+                ''', returnStatus: true)
+
+                echo "Terraform apply exit code: ${status}"
+                }
             }
+
         }
     }
 }
