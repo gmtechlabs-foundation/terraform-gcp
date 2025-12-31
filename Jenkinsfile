@@ -50,7 +50,7 @@ pipeline {
             }
         }
 
-      stage('Terraform Plan') { 
+    stage('Terraform Plan') { 
         steps
             { 
                 sh ''' cd src && terraform plan \
@@ -60,21 +60,36 @@ pipeline {
               } 
             }
 
-        stage('Terraform Apply') {
-            when {
-                branch 'main'
+    stage('Terraform Apply') {
+        when {
+            allOf {
+                expression { env.CHANGE_ID }
+                expression { params.TERRAFORM_ACTION == 'apply' }
             }
-            steps {
-            script {
-                def status = sh(script: '''
-                    cd src && terraform apply \
-                    -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT" \
-                    -auto-approve tfplan
-                ''', returnStatus: true)
+        }
 
-                echo "Terraform apply exit code: ${status}"
-                }
+        steps {
+        script { 
+            def pr = env.CHANGE_ID 
+            def repo = "vinoddevlab/terraform-gcp" 
+            def token = credentials('classic-git-pat') 
+            def response = sh( script: """ curl -s -H "Authorization: token ${token}" \ 
+                                           https://api.github.com/repos/${repo}/pulls/${pr} """, returnStdout: true ).trim() 
+            def prInfo = readJSON text: response 
+            echo "mergeable_state = ${prInfo.mergeable_state}" 
+            if (prInfo.mergeable_state != "clean") { 
+                error("PR is not ready. mergeable_state=${prInfo.mergeable_state}") } 
             }
+        script {
+            def status = sh(script: '''
+                cd src && terraform apply \
+                -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT" \
+                -auto-approve tfplan
+            ''', returnStatus: true)
+
+            echo "Terraform apply exit code: ${status}"
+            }
+        }
 
         }
     }
