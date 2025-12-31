@@ -6,9 +6,18 @@ pipeline {
  
         }
     }
+    parameters {
+    string(
+        name: 'TERRAFORM_ACTION',
+        defaultValue: 'plan',
+        description: 'Enter terraform action: plan or apply'
+    )
+    }
     environment {
         GOOGLE_IMPERSONATE_SERVICE_ACCOUNT = "terraform-ci@gmtech-bld-001.iam.gserviceaccount.com"
         GOOGLE_PROJECT = "gmtech-bld-001"
+        GITHUB_TOKEN = credentials('github-token')
+        REPO = "your-org/your-repo"
     }
 
     stages {
@@ -56,11 +65,13 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh '''
+                def status = sh(script: '''
                     cd src && terraform apply \
                     -var="impersonate_sa=$GOOGLE_IMPERSONATE_SERVICE_ACCOUNT" \
-                    -auto-approve tfplan
-                '''
+                    -auto-approve tfplan''', returnStatus: true)
+                if (status != 0) {
+                    error("Terraform apply failed. PR will NOT be merged.")
+                }
             }
         }
     }
