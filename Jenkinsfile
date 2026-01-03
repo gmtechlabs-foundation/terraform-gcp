@@ -76,7 +76,7 @@ pipeline {
             def token = credentials('classic-git-pat') 
 
             def approvals = sh( script: """ curl -s -H "Authorization: token ${token}" https://api.github.com/repos/${repo}/pulls/${pr}/reviews """, returnStdout: true ).trim() 
-            def prInfo = readJSON(text: response)
+            def prInfo = readJSON(text: approvals)
                 .findAll { it.state == "APPROVED" }
             
             if (approvals.size() == 0) { 
