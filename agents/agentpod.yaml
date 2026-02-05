@@ -1,0 +1,13 @@
+agent:
+  kubernetes:
+    yaml: |
+      apiVersion: v1
+      kind: Pod
+      spec:
+        serviceAccountName: jenkins
+        containers:
+        - name: terraform
+          image: hashicorp/terraform:1.7
+          command:
+          - cat
+          tty: true

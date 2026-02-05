@@ -1,0 +1,6 @@
+controller:
+  serviceAccount:
+    create: true
+    name: jenkins
+    annotations:
+      iam.gke.io/gcp-service-account: terraform-ci@gmtech-bld-001.iam.gserviceaccount.com
