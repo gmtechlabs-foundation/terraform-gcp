@@ -1,3 +1,4 @@
 provider "google" {
-    impersonate_service_account = var.impersonate_sa 
+    project = "gmtech-bld-01"
+    region  = "europe-west2"
 }
