@@ -1,4 +1,4 @@
 provider "google" {
-    project = "gmtech-bld-01"
+    project = "gmtech-bld-001"
     region  = "europe-west2"
 }
