@@ -11,6 +11,7 @@ pipeline {
         container('terraform') {
           sh 'terraform init'
           sh 'terraform plan'
+          sh 'sleep 30'
         }
       }
     }
