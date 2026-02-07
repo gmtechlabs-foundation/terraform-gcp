@@ -9,9 +9,10 @@ pipeline {
     stage('Terraform Plan') {
       steps {
         container('terraform') {
-          sh 'terraform init'
-          sh 'terraform plan'
-          sh 'sleep 30'
+            dir('src'){
+                sh 'terraform init'
+                sh 'terraform plan'
+            }
         }
       }
     }
