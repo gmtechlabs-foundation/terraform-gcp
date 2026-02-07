@@ -4,3 +4,14 @@ controller:
     name: jenkins
     annotations:
       iam.gke.io/gcp-service-account: terraform-ci@gmtech-bld-001.iam.gserviceaccount.com
+  serviceType: LoadBalancer
+  loadBalancerIP: "34.17.180.227"
+  serviceAnnotations:
+    cloud.google.com/load-balancer-type: "External"
+  admin:
+    username: admin
+    password: admin
+  servicePort: 80
+  targetPort: 8080
+
+
