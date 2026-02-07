@@ -8,12 +8,10 @@ pipeline {
   stages {
     stage('Terraform Plan') {
       steps {
-        container('terraform'){
-            sh 'terraform init'
-            sh 'terraform plan'
-
+        container('terraform') {
+          sh 'terraform init'
+          sh 'terraform plan'
         }
-        
       }
     }
   }
